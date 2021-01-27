@@ -12,44 +12,44 @@ public class Agra_10 {
      * @param tasks The tasks, always in pairs of task type then task value.
      * @return the total points awarded
      */
-    public static int mealPrep( Queue<String> tasks ) {
-        Stack<String> plates = new Stack<>();
-        int main = 0;
-        int dessert = 0;
-        int points = 0;
-       
-        while ( !tasks.isEmpty() ) {
+    public static int mealPrep(Queue<String> tasks) {
+        Stack<String> platesAvailable = new Stack<>();
+        int mainMeal = 0;
+        int dessertMeal = 0;
+        int points = 0;    
+        while (!tasks.isEmpty()) {
             String task = tasks.remove();
-            String value = tasks.remove();
-            switch ( task ) {
+            String mainOrDessert = tasks.remove();
+            switch (task) {
                 case "CLEAN":
-                    plates.add( value );
+                    platesAvailable.add(mainOrDessert);
                     break;
                 case "COOK":
-                    if ( value.equals("MAIN")) {
-                        main++;
+                    if (mainOrDessert.equals("MAIN")) {
+                        mainMeal++;
                     }
-                    else {
-                        dessert++;
+                    else if (mainOrDessert.equals("DESSERT")) {
+                        dessertMeal++;
                     }
                     break;
                 default:
-                    if ( plates.isEmpty() ||
-                         value.equals("MAIN") && (main <= 0 || plates.peek().equals("SMALL")) ||
-                         value.equals("DESSERT") && (dessert <= 0 )) {
-                         points -= 5;
-                    }
-                    else {
-                        plates.pop();
-                        if ( value.equals("MAIN" ) ) {
-                            points += 2;
-                            main--;
-                        }
-                        else {
-                            points++;
-                            dessert--;
-                        }
-                    }
+                	if (platesAvailable.isEmpty() || mainOrDessert.equals("MAIN") && (mainMeal <= 0) 
+                		  || mainOrDessert.equals("MAIN") && !platesAvailable.peek().equals("LARGE") 
+                		  || mainOrDessert.equals("DESSERT") && (dessertMeal <= 0)) {
+                		points -= 5;
+                	} 
+                	else {
+                		platesAvailable.pop();
+                		if (mainOrDessert.equals("MAIN")) {
+                			points += 2;
+                			mainMeal--;
+                		}
+                		else if (mainOrDessert.equals("DESSERT")) {
+                			points++;
+                			dessertMeal--;
+                		}
+                	}
+                	
             }
         }
         return points;
