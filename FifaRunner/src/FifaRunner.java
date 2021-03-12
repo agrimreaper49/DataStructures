@@ -9,7 +9,13 @@ public class FifaRunner {
 	private static TreeSet<Integer> ages = new TreeSet<>();
 	private static TreeSet<String> nationalities = new TreeSet<>();
 	private static HashSet<String> positions = new HashSet<>();
-	private static HashMap<String, Integer>  positionCount = new HashMap<>();
+	
+	//Maps
+	private static TreeMap<String, Integer>  positionCount = new TreeMap<>();
+	private static TreeMap<String, Integer> nationalityCount = new TreeMap<>();
+	private static TreeMap<String, Integer> oldestPerNation = new TreeMap<>();
+	private static TreeMap<Integer, Integer> groupCount = new TreeMap<>();
+	private static TreeMap<String, TreeSet<String>> positionToNation = new TreeMap<>();
 	
    
   
@@ -18,7 +24,6 @@ public class FifaRunner {
      * @param args
      */
     public static void main(String[] args) {
- 
         // Change this location if you need to.
         processFile("./src/fifa");
         printResults();
@@ -32,10 +37,33 @@ public class FifaRunner {
      * @param nationality The nationality of the player.
      */
     private static void processLine(int age, String position, String nationality) {
+    	// Part A
        ages.add(age);
+       
+       //Part B
        nationalities.add(nationality);
+       
+       //Part C
        positions.add(position);
-//       positionCount.put(position, value)
+       
+       //Part E
+       positionCount.put(position, positionCount.getOrDefault(position, 0) + 1);
+       
+       //Part F
+       nationalityCount.put(nationality, nationalityCount.getOrDefault(nationality, 0));
+       //Part F
+       oldestPerNation.put(nationality, 
+    		   oldestPerNation.getOrDefault(nationality, 0) < age ? age : oldestPerNation.get(nationality) );
+       //Part G
+       int count = 5 * (int)Math.ceil(age / 5.0);
+       groupCount.put(count, groupCount.getOrDefault(count, 0) + 1);
+       
+       //Part H
+       TreeSet<String> positions = positionToNation.getOrDefault(nationality, new TreeSet<String>());
+       positions.add(position);
+       positionToNation.put(nationality, positions);
+       
+       
     }
  
    
@@ -75,17 +103,17 @@ public class FifaRunner {
        
         //E Determine the number of players per position. IE: GK (goalkeeper) may have 85 players.
         //  Print the results in any order.
-        System.out.println("Position count: ");
+        System.out.println("Position count: " + positionCount.toString());
         System.out.println();
      
         //F Determine the number of players per nation.
         //  Print the results in any alphabetical order.
-        System.out.println("Nationality count: ");
+        System.out.println("Nationality count: " + nationalityCount.toString());
         System.out.println();
        
         //F Determine the oldest player per nationality.
         //  Print the results in alphabetical order.
-        System.out.println("Oldest per nation: ");
+        System.out.println("Oldest per nation: " + oldestPerNation.toString());
         System.out.println();
        
         //G Determine the number of players per age group.
@@ -94,15 +122,29 @@ public class FifaRunner {
         //  Anyone aged 21, 22, 23, 24, 25 is in group 25.
         //  Etcetera. Want the math? ---> scroll right                                                                                                                                                                                              5 * (int)Math.ceil(age / 5.0)
         //  Print the results in numerical order by age (youngest group first).
-        System.out.println("Age group count: ");
+        System.out.println("Age group count: " + groupCount.toString());
         System.out.println();
        
         //H Build a Map of Nationalities to Positions.
         //  Print each nation on its own individual line followed by all of the positions that nation has.
         //  Also print the nation which has the most unique number of positions and how many it has.
+        
         System.out.println("All positions in each nation:");
+        for (String key : positionToNation.keySet()) {
+            System.out.println(key + ": " + positionToNation.get(key));
+        }
        
-        System.out.println("Country with most positions: " + null + "(" + 0 + ")");
+        String str = "";
+        int highest = 0;
+        for (String key : positionToNation.keySet()) {
+        	Set<String> loc = positionToNation.get(key);
+        	if (loc.size() > highest) {
+        		highest = loc.size();
+        		str = key;
+        	}
+        }
+        System.out.println("Country with most positions: " + str + " (" + highest + ")");
+
     }
    
  
