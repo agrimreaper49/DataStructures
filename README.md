@@ -1,7 +1,7 @@
 # DataStructures
 
 
-Contains the projects that I did for my data structures class
+### Contains the projects that I did for my data structures and algorithims class. Contains advanced java topics.
 
 
 
