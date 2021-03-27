@@ -17,7 +17,8 @@ public class FifaRunner {
 	private static TreeMap<Integer, Integer> groupCount = new TreeMap<>();
 	private static TreeMap<String, TreeSet<String>> positionToNation = new TreeMap<>();
 	
-   
+	private static TreeMap<String, TreeSet<String>> test1 = new TreeMap<>();
+
   
     /**
      * Runs the program.
@@ -25,8 +26,9 @@ public class FifaRunner {
      */
     public static void main(String[] args) {
         // Change this location if you need to.
-        processFile("./src/fifa");
-        printResults();
+       processFile("./src/fifa");
+       printResults();
+
     }
    
    
@@ -63,8 +65,8 @@ public class FifaRunner {
        positions.add(position);
        positionToNation.put(nationality, positions);
        
-       
     }
+    
  
    
     /**
@@ -137,7 +139,7 @@ public class FifaRunner {
         String str = "";
         int highest = 0;
         for (String key : positionToNation.keySet()) {
-        	Set<String> loc = positionToNation.get(key);
+        	TreeSet<String> loc = positionToNation.get(key);
         	if (loc.size() > highest) {
         		highest = loc.size();
         		str = key;
