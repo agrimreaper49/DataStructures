@@ -20,14 +20,14 @@ public class MinIntegerHeap {
    public static void main (String [] args) {
 	   MinIntegerHeap testHeap = new MinIntegerHeap();
        Random rand = new Random();
-       for ( int x = 0; x < 50000; x++ ) {
-           testHeap.add( rand.nextInt(1000) - 500 );
+       for (int x = 0; x < 50000; x++) {
+           testHeap.add(rand.nextInt(1000) - 500);
        }
        
        Integer current = testHeap.remove();
-       while ( !testHeap.isEmpty() ) {
+       while (!testHeap.isEmpty()) {
            Integer next = testHeap.remove();
-           if ( current > next ) {
+           if (current > next) {
                System.out.println("Failed.");
            }
            current = next;
