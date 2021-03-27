@@ -18,7 +18,7 @@ public class MinIntegerHeap {
     * @param args the main method
     */
    public static void main (String [] args) {
-	   MinIntegerHeap testHeap = new MinIntegerHeap();
+       MinIntegerHeap testHeap = new MinIntegerHeap();
        Random rand = new Random();
        for (int x = 0; x < 50000; x++) {
            testHeap.add(rand.nextInt(1000) - 500);
